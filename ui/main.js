@@ -1,20 +1,14 @@
 window.onload = function() {
-  
+
 	let module_panel = document.getElementById("module-panel");
-	// let ws = new WebSocket("ws://localhost:8888/");
+	let ws = new WebSocket("ws://localhost:8888/");
 
-	// ws.onopen = (() => console.log('opened'))
-	// ws.onmessage = (event) => {
-	// 	console.log(event.data)
-	// 	let node = document.getElementById('received-text');
-	//     node.value += event.data;
-	// };
-
-
-	// for (var i = 0; i < 4; i++) {
-	// 	let node = add_module();
-	// 	module_panel.appendChild(node);
-	// }
+	ws.onopen = (() => console.log('opened'))
+	ws.onmessage = (event) => {
+		console.log(event.data)
+		let node = document.getElementById('received-text');
+	    node.value += event.data;
+	};
 
 	document.getElementById("add-module").onclick = () => {
 		api_call('getallmoduleslist', show_modules);
@@ -27,7 +21,7 @@ window.onload = function() {
 		}
 	};
 
-	function add_module(module) {
+	function show_modules(module) {
 		let node = document.createElement("div");
 		node.id = "addedDiv";
 		node.className = "col-3";
@@ -46,13 +40,6 @@ window.onload = function() {
 			.then(myJson => callback(myJson))
 	}
 
-	function postData(url) {
-		console.log(url)
-  // Default options are marked with *
-  return fetch(url)
-  .then(response => response.json())
-  .then(myJson => console.log(myJson)) // parses response to JSON
-}
 };
 	// function clickedButton() {
 	// 	ws.send(JSON.stringify({topic: "test", data: "bla bla bla"}));

@@ -19,6 +19,6 @@ class Router {
 
 data class ApiResponse<out T>(val code: Int, val data: T)
 
-val responseSuccess:Int = 1
-val responseFailed:Int  = 0
-val responseException:Int = -1
+const val responseSuccess:Int = 1
+const val responseFailed:Int  = 0
+const val responseException:Int = -1
