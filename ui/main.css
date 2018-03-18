@@ -1,0 +1,25 @@
+body {
+    /*font-family: 'Roboto', sans-serif;*/
+}
+
+#main-div {
+	color: #CCCCCC;
+	background-color: #00001F;
+    font-family: 'Roboto Condensed', sans-serif;
+	height:100vh;
+}
+
+.dashboard-module {
+	border: 1px;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #AAAAAA;
+	height: 100px;
+	padding: 15px;
+	margin-bottom: 15px; 
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
