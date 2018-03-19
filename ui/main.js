@@ -1,6 +1,5 @@
 window.onload = function() {
-
-	let module_panel = document.getElementById("module-panel");
+	let module_panel = $("#module-panel");
 	let ws = new WebSocket("ws://localhost:8888/");
 
 	ws.onopen = (() => console.log('opened'))
@@ -10,33 +9,20 @@ window.onload = function() {
 	    node.value += event.data;
 	};
 
-	document.getElementById("add-module").onclick = () => {
-		api_call('getallmoduleslist', show_modules);
-		// module_panel.appendChild(node);
-	};
+	// $("#add-module").click(() => {
+	// 	api_call('getallmoduleslist', show_modules);
+	// 	// module_panel.appendChild(node);
+	// });
 
-	document.getElementById("remove-module").onclick = () => {
-    let modal = document.getElementById('myModal');
-    modal.style.display = "none";
-		// if (module_panel.childElementCount > 0) {
-		// 	module_panel.removeChild(module_panel.lastChild);
-		// }
-	};
+	$("#remove-module").click(() => {
+    	if (module_panel.childElementCount > 0) {
+			module_panel.removeChild(module_panel.lastChild);
+		}
+	});
 
-	function show_modules(module) {
-    let modal = document.getElementById('myModal');
-    modal.style.display = "block";
-		// let node = document.createElement("div");
-		// node.id = "addedDiv";
-		// node.className = "col-3";
-    //
-		// let container = document.createElement("div");
-		// container.className = "dashboard-module";
-		// container.innerHTML = `<p> ADDED MODULE </p>`;
-    //
-		// node.appendChild(container);
-		// module_panel.appendChild(node);
-	}
+	function show_modules(modules) {
+		$('#myModal').modal('show');
+ 	}
 
 	function api_call(method, callback) {
 		return fetch('http://localhost:8080/api/' + method)
@@ -44,6 +30,26 @@ window.onload = function() {
 			.then(myJson => callback(myJson))
 	}
 
+	$("#myModal").on('show.bs.modal', (e) => {
+		let type = $(e.relatedTarget).data('modaltype');
+		let data = MODAL_TYPES[type];
+		$('#myModalLabel').text(data.title);
+		$("#myModalBody").html(`
+		<div class="container-fluid">
+ 			<div class="row">
+      			<div class="col-md-4">${getStuff()}</div>
+      			<div class="col-md-4 ml-auto">.col-md-41 .ml-auto</div>
+			</div>
+			<div class="row">
+      			<div class="col-md-4">.col-md-42</div>
+      			<div class="col-md-4 ml-auto">.col-md-42 .ml-auto</div>
+			</div>
+ 
+   	    </div>
+		`);
+	});
+   
+   function getStuff() {return 'test WORKED';}
 };
 	// function clickedButton() {
 	// 	ws.send(JSON.stringify({topic: "test", data: "bla bla bla"}));
