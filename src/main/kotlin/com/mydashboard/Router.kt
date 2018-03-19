@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class Router {
 
-    @CrossOrigin(origins = ["http://localhost:8383"])
+    @CrossOrigin(origins = ["*"])
     @GetMapping("/api/getallmoduleslist")
     fun getAllmodulesList() = ApiResponse(responseSuccess, listOf("vasttrafik Module", "trying list to see what will happened"))
 
