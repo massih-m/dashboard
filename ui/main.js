@@ -20,36 +20,12 @@ window.onload = function() {
 		}
 	});
 
-	function show_modules(modules) {
-		$('#myModal').modal('show');
- 	}
-
-	function api_call(method, callback) {
-		return fetch('http://localhost:8080/api/' + method)
-			.then(response => response.json())
-			.then(myJson => callback(myJson))
-	}
-
-	$("#myModal").on('show.bs.modal', (e) => {
+	$("#myModal").on('shown.bs.modal', (e) => {
 		let type = $(e.relatedTarget).data('modaltype');
 		let data = MODAL_TYPES[type];
-		$('#myModalLabel').text(data.title);
-		$("#myModalBody").html(`
-		<div class="container-fluid">
- 			<div class="row">
-      			<div class="col-md-4">${getStuff()}</div>
-      			<div class="col-md-4 ml-auto">.col-md-41 .ml-auto</div>
-			</div>
-			<div class="row">
-      			<div class="col-md-4">.col-md-42</div>
-      			<div class="col-md-4 ml-auto">.col-md-42 .ml-auto</div>
-			</div>
- 
-   	    </div>
-		`);
+		window[data.handler](data);
 	});
-   
-   function getStuff() {return 'test WORKED';}
+
 };
 	// function clickedButton() {
 	// 	ws.send(JSON.stringify({topic: "test", data: "bla bla bla"}));
@@ -58,3 +34,38 @@ window.onload = function() {
 	// function clickedButton2() {
 	// 	ws.send(JSON.stringify({topic: "real", data: "real data"}));
 	// }
+
+
+function api_call(method, callback) {
+	return fetch('http://localhost:8080/api/' + method)
+		.then(response => response.json())
+		.then(myJson => callback(myJson.data))
+}
+
+
+function show_modules(data) {
+	$('#myModalLabel').text(data.title);
+	$("#myModalBody").html(`
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6" id='modal-left-panel'>
+					<p> Fetching data... </p>
+				</div>
+				<div class="col-md-6 ml-auto" id='modal-right-panel'></div>
+			</div>
+		</div>
+	`);
+	api_call('getallmoduleslist', add_modules_modal);
+}
+
+function add_modules_modal(modules){
+	let panel = $('#modal-left-panel');
+	panel.html('');
+	$.each(modules, (index, value) => {
+		panel.append(`
+			<input type="radio" id="moduleId${index}"	name="modules" value="${value}">
+			<label for="moduleId${index}">${value}</label>
+		`);
+	});
+	$('#myModal').modal('handleUpdate');
+}
