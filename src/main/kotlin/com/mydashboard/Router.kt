@@ -9,7 +9,17 @@ class Router {
 
     @CrossOrigin(origins = ["*"])
     @GetMapping("/api/getallmoduleslist")
-    fun getAllmodulesList() = ApiResponse(responseSuccess, listOf("vasttrafik Module", "trying list to see what will happened"))
+    fun getAllmodulesList() = ApiResponse(responseSuccess,
+            listOf(
+                    hashMapOf(
+                            "name" to "Vasttrafik",
+                            "inputs" to listOf(
+                                    hashMapOf("input_name" to "destination stop", "input_type" to " blabla")
+                            )
+                    ),
+                    hashMapOf("name" to "Weather", "inputs" to "town name")
+            )
+    )
 
     @CrossOrigin(origins = ["*"])
     @GetMapping("/api/getallmodules")
