@@ -10,13 +10,14 @@ window.onload = function() {
 	};
 
 	$("#remove-module").click(() => {
-    	if (module_panel.childElementCount > 0) {
-			module_panel.removeChild(module_panel.lastChild);
+		if ($('#module-row').children().length > 0) {
+			$('#module-row').children().last().remove();
 		}
 	});
 
 	$("#add-module").click(() => {
-		api_call('getallmoduleslist', show_modules);
+		// api_call('getallmoduleslist', show_modules);
+		add_module({'title': 'weather'});
   	});
 
 	$("#modalCloseBtn").click(() => {
@@ -37,54 +38,34 @@ function show_modules(data) {
 	$('#myModal').show();
 }
 
-function set_grid_layout() {
-	$("#modalBody").html(`
-		<div class="modal-grid-wrapper">
-			<div id='modalLeftPanel'>
-				<p> Fetching data... </p>
-			</div>
-			<div id='modalRightPanel'>
+function add_module(data) {
+	$('#module-row').append(`
+		<div class="col s12 m6 l3 transparent">
+			<div class='card blue darken-4'>
+				<div class='card-content text-grey text-lighten-4'>
+					<span class='card-title'>${data.title}</span>
+					<p>I am a very simple card. I am good at containing small bits of information.
+I am convenient because I require little markup to use effectively.</p>
+				</div>
 			</div>
 		</div>
 	`);
 }
 
-function add_modules_modal(modules){
-	let panel = $('#modalLeftPanel');
-	panel.html('');
-	$.each(modules, (index, module) => {
-		let id = "radioButton" + index;
-		panel.append(`
-			<div class='blocked'>
-				<input type="radio"	id="${id}" name="modules" value="${module.name}">
-				<label for="${id}">${module.name}</label>
-			</div>
-		`);
-		$("#"+id).data('inputdata', module.inputs).click(radio_button_handler);
-	});
-}
-
-function radio_button_handler(event) {
-	let node = $(event.target);
-	let panel = $('#modalRightPanel');
-	panel.html('');
-	panel.append(`<p> Module ${node.val()} </p>`);
-	panel.append(`
-		<form class="needs-validation" id='moduleForm' novalidate></form>
-	`);
-	$.each(node.data('inputdata'), (index, input) => {
-		let id = node + '_input_' + index;
-		$('#moduleForm').append(`
-				<div class="form-group">
-	    			<label for="${id}">${input.input_name}</label>
-	    			<input type="text" class="form-control" id="${id}" placeholder="${input.input_type}" required>
-	  			</div>
-			</form>
-		`);
-	});
-	$('#modalFooter').html(`
-		<button class="btn waves-effect waves-light blue accent-2" type="submit" name="action">Submit
-    		<i class="material-icons right">send</i>
-  		</button>
+function set_spinner(target_div) {
+	$('#' + target_div).html(`
+		<div class="preloader-wrapper small active">
+			<div class="spinner-layer spinner-green-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+		    </div>
+				<div class="gap-patch">
+		      <div class="circle"></div>
+		    </div>
+				<div class="circle-clipper right">
+		      <div class="circle"></div>
+		    </div>
+		  </div>
+		</div>
 	`);
 }
