@@ -2,16 +2,16 @@
 <html lang="en">
     <head>
 	    <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    	<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
 
     	<link rel="stylesheet" href="css/main.css">
+    	<link rel="stylesheet" href="css/modal.css">
     	<script src="js/modal.js"></script>
     	<script src="js/main.js"></script>
 
@@ -21,8 +21,12 @@
 		<div class="container-fluid" id="main-div">
 			<div class="row justify-content-start" id="control-panel">
 				<div class="col-2 offset-md-5 align-self-center">
-					<i class="material-icons md-48" id="add-module" data-toggle="modal" data-target="#myModal" data-modaltype='add-modules'>add_circle_outline</i>
-					<i class="material-icons md-48" id="remove-module">remove_circle_outline</i>
+					<a class="btn-floating waves-effect waves-light red" id="add-module">
+						<i class="material-icons">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light red" id="remove-module">
+						<i class="material-icons">remove</i>
+					</a>
 				</div>
 			</div>
 
@@ -30,32 +34,20 @@
 			</div>
 
 		</div>
-
-		<!-- Modal Template -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered modal-dialog-lg my-modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="myModalLabel"></h5>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-		          <i class="material-icons">highlight_off</i>
-		        </button>
-		      </div>
-		      <div class="modal-body" id="myModalBody"></div>
-		      <div class="modal-footer">
-		      	<div class="container-fluid">
-		      		<div class="row">
-		      			<div class="col-1">
-		        			<button type="button" class="btn btn-light btn-xsm float-xl-left"><i class="material-icons">arrow_back</i></button>  				
-		      			</div>
-		      			<div class="col-1 offset-md-10">
-	   					    <button type="button" class="btn btn-light btn-xsm float-xl-right"><i class="material-icons">arrow_forward</i></button>	
-		      			</div>
-		      		</div>
-		      	</div>
-		      </div>
-		    </div>
-		  </div>
+		<!-- modal -->
+		<div id="myModal" class="my-modal">
+			<div class="my-modal-dialog">
+				<div class="my-modal-content">
+					<div class="my-modal-header blue accent-3 white-text">
+						<i class="material-icons right" id="modalCloseBtn">close</i>
+						<h5 id="modalTitle"></h5>
+					</div>
+				
+					<div class="my-modal-body white" id="modalBody"></div>
+				
+					<div class="my-modal-footer white" id="modalFooter"></div>
+	  			</div>
+			</div>
 		</div>
 
     </body>

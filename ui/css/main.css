@@ -1,7 +1,6 @@
 #main-div {
 	color: #CCCCCC;
 	background-color: #00001F;
-  	font-family: 'Roboto Condensed', sans-serif;
 	height:100vh;
 }
 
@@ -13,45 +12,16 @@
 	height: 100px;
 	padding: 15px;
 	margin-bottom: 15px;
-	font-family: 'Roboto', sans-serif;
 }
 
 #add-module, #remove-module {
     cursor: pointer;
-}
-#myModalBody {
-    height: 250px;
-    overflow-y: auto;
-}
-
-#myModalBody div.row div {
-	height: inherit;
-}
-
-.modal-content {
-	font-family: 'Roboto', sans-serif;	
-}
-
-.my-modal-dialog {
-	overflow-y: initial !important;
-	min-width: 35%;
-}
-
-.modal-header {
-  	font-family: 'Roboto Condensed', sans-serif;
-	background-color: #007bff;
-	color: #fff;
 }
 
 .block {
 	display: block;
 }
 
-#modal-left-panel {
-	border-right: 1px;
-	border-right-style: solid;
-	border-right-color: #000;
-}
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }

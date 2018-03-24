@@ -15,11 +15,13 @@ window.onload = function() {
 		}
 	});
 
-	$("#myModal").on('shown.bs.modal', (e) => {
-		let type = $(e.relatedTarget).data('modaltype');
-		let data = MODAL_TYPES[type];
-		window[data.handler](data);
-	});
+	$("#add-module").click(() => {
+		api_call('getallmoduleslist', show_modules);
+  	});
+
+	$("#modalCloseBtn").click(() => {
+  		$('#myModal').hide();
+  	});
 };
 
 function api_call(method, callback) {
@@ -29,22 +31,26 @@ function api_call(method, callback) {
 }
 
 function show_modules(data) {
-	$('#myModalLabel').text(data.title);
-	$("#myModalBody").html(`
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4 .ml-auto" id='modal-left-panel'>
-					<p> Fetching data... </p>
-				</div>
-				<div class="col-md-8 .ml-auto" id='modal-right-panel'></div>
+	$('#modalTitle').text('Select module:');
+	set_grid_layout();
+	add_modules_modal(data);
+	$('#myModal').show();
+}
+
+function set_grid_layout() {
+	$("#modalBody").html(`
+		<div class="modal-grid-wrapper">
+			<div id='modalLeftPanel'>
+				<p> Fetching data... </p>
+			</div>
+			<div id='modalRightPanel'>
 			</div>
 		</div>
 	`);
-	api_call('getallmoduleslist', add_modules_modal);
 }
 
 function add_modules_modal(modules){
-	let panel = $('#modal-left-panel');
+	let panel = $('#modalLeftPanel');
 	panel.html('');
 	$.each(modules, (index, module) => {
 		let id = "radioButton" + index;
@@ -56,23 +62,29 @@ function add_modules_modal(modules){
 		`);
 		$("#"+id).data('inputdata', module.inputs).click(radio_button_handler);
 	});
-	$('#myModal').modal('handleUpdate');
 }
 
 function radio_button_handler(event) {
 	let node = $(event.target);
-	let panel = $('#modal-right-panel');
+	let panel = $('#modalRightPanel');
 	panel.html('');
 	panel.append(`<p> Module ${node.val()} </p>`);
+	panel.append(`
+		<form class="needs-validation" id='moduleForm' novalidate></form>
+	`);
 	$.each(node.data('inputdata'), (index, input) => {
-		panel.append(`
-			<div class="input-group input-group-sm mb-3">
-  				<div class="input-group-prepend">
-    				<span class="input-group-text" id="inputGroup-sizing-default">${input.input_name}</span>
-  				</div>
-				<input type="text" class="form-control myModal-text-input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-			</div>
+		let id = node + '_input_' + index;
+		$('#moduleForm').append(`
+				<div class="form-group">
+	    			<label for="${id}">${input.input_name}</label>
+	    			<input type="text" class="form-control" id="${id}" placeholder="${input.input_type}" required>
+	  			</div>
+			</form>
 		`);
 	});
-	$('#myModal').modal('handleUpdate');
+	$('#modalFooter').html(`
+		<button class="btn waves-effect waves-light blue accent-2" type="submit" name="action">Submit
+    		<i class="material-icons right">send</i>
+  		</button>
+	`);
 }
