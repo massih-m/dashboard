@@ -16,13 +16,12 @@ window.onload = function() {
 	});
 
 	$("#add-module").click(() => {
-		// api_call('getallmoduleslist', show_modules);
-		add_module({'title': 'weather'});
-  	});
+		api_call('getallmoduleslist', show_modal_modules);
+	});
 
 	$("#modalCloseBtn").click(() => {
-  		$('#myModal').hide();
-  	});
+		modal_hide();
+  });
 };
 
 function api_call(method, callback) {
@@ -31,11 +30,11 @@ function api_call(method, callback) {
 		.then(myJson => callback(myJson.data))
 }
 
-function show_modules(data) {
+function show_modal_modules(data) {
 	$('#modalTitle').text('Select module:');
 	set_grid_layout();
-	add_modules_modal(data);
-	$('#myModal').show();
+	fill_modules_data(data);
+	modal_show()
 }
 
 function add_module(data) {
@@ -50,6 +49,14 @@ I am convenient because I require little markup to use effectively.</p>
 			</div>
 		</div>
 	`);
+}
+
+function modal_show() {
+	$('#myModal').show();
+}
+
+function modal_hide() {
+	$('#myModal').hide();
 }
 
 function set_spinner(target_div) {

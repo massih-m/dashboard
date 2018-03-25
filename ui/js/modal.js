@@ -16,7 +16,7 @@ function set_grid_layout() {
 	`);
 }
 
-function add_modules_modal(modules){
+function fill_modules_data(modules){
 	let panel = $('#modalLeftPanel');
 	panel.html('');
 	$.each(modules, (index, module) => {
@@ -49,9 +49,10 @@ function radio_button_handler(event) {
 			</form>
 		`);
 	});
-	$('#modalFooter').html(`
-		<button class="btn waves-effect waves-light blue accent-2" type="submit" name="action">Submit
-    		<i class="material-icons right">send</i>
-  		</button>
-	`);
+	$('#modal-submit-btn').removeClass('disabled').click(x =>
+		{
+			modal_hide();
+			add_module({'title': 'weather'});
+		}
+	);
 }
