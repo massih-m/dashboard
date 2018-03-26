@@ -14,7 +14,7 @@ class Router {
                     hashMapOf(
                             "name" to "Vasttrafik",
                             "inputs" to listOf(
-                                    hashMapOf("input_name" to "destination stop", "input_type" to " blabla")
+                                    hashMapOf("label" to "destination stop", "type" to " blabla")
                             )
                     ),
                     hashMapOf("name" to "Weather", "inputs" to "town name")

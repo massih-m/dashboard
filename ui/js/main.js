@@ -1,12 +1,10 @@
 window.onload = function() {
-	let module_panel = $("#module-panel");
 	let ws = new WebSocket("ws://localhost:8888/");
 
 	ws.onopen = (() => console.log('opened'))
 	ws.onmessage = (event) => {
-		console.log(event.data)
-		let node = document.getElementById('received-text');
-	    node.value += event.data;
+		console.log('websocket message received');
+		console.log(event.data);
 	};
 
 	$("#remove-module").click(() => {
@@ -16,12 +14,17 @@ window.onload = function() {
 	});
 
 	$("#add-module").click(() => {
-		api_call('getallmoduleslist', show_modal_modules);
+		api_call('getallmoduleslist', show_modules_modal);
 	});
 
 	$("#modalCloseBtn").click(() => {
-		modal_hide();
+		Modal.hide();
   });
+
+  	$('#modal-submit-btn').click(x => {
+		Modal.hide();
+		add_module({'title': 'weather'});
+	});
 };
 
 function api_call(method, callback) {
@@ -30,11 +33,11 @@ function api_call(method, callback) {
 		.then(myJson => callback(myJson.data))
 }
 
-function show_modal_modules(data) {
-	$('#modalTitle').text('Select module:');
-	set_grid_layout();
-	fill_modules_data(data);
-	modal_show()
+function show_modules_modal(data) {
+	Modal.set_title('Select module:');
+	Modal.set_grid_layout();
+	Modal.fill_modules_data(data);
+	Modal.show();
 }
 
 function add_module(data) {
@@ -51,13 +54,27 @@ I am convenient because I require little markup to use effectively.</p>
 	`);
 }
 
-function modal_show() {
-	$('#myModal').show();
+function show_module_data(event) {
+	let node = $(event.target);
+	let panel = $('#modalRightPanel');
+	panel.html('');
+	panel.append(`<p> Module ${node.val()} </p>`);
+	panel.append(`
+		<form class="needs-validation" id='moduleForm' novalidate></form>
+	`);
+	$.each(node.data('inputdata'), (index, input) => {
+		let id = node + '_input_' + index;
+		$('#moduleForm').append(`
+				<div class="form-group">
+					<label for="${id}">${input.label}</label>
+					<input type="text" class="form-control" id="${id}" placeholder="${input.type}" required>
+				  </div>
+			</form>
+		`);
+	});
+	$('#modal-submit-btn').removeClass('disabled');
 }
 
-function modal_hide() {
-	$('#myModal').hide();
-}
 
 function set_spinner(target_div) {
 	$('#' + target_div).html(`
